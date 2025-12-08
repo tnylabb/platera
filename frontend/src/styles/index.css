@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Alap stílusok */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #09090b;
+  color: white;
+}
+
+/* Egyedi utility classok */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #AF12DE 0%, #d946ef 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(175, 18, 222, 0.3) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 40px rgba(175, 18, 222, 0.3);
+  }
+}
+
+/* Scrollbar stilizálás */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #18181b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #AF12DE;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9810c2;
+}
