@@ -12,6 +12,8 @@ import menuRouter from './routes/menu';
 import authRouter from './routes/auth';
 import categoryRouter from './routes/category';
 import cartRouter from './routes/cart';
+import orderRouter from './routes/order';
+import billRouter from './routes/bill';
 
 // Routeok
 app.use('/api/restaurant', restaurantRouter);
@@ -19,6 +21,8 @@ app.use('/api/menu', menuRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/cart', cartRouter);
+app.use('/api/orders', orderRouter);
+app.use('/api/bills', billRouter);
 
 // Teszt endpoint
 app.get("/", (_req, res) => {
