@@ -8,9 +8,9 @@ export const getRestaurantInfo = async (_req: Request, res: Response) => {
   try {
     const [rows] = await connection.query<RowDataPacket[]>('SELECT * FROM RESTAURANT_INFO LIMIT 1');
     if (rows.length === 0) return res.status(404).json({ error: "Étterem információ nem található" });
-    res.json(rows[0]);
+    return res.json(rows[0]);
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };
 
@@ -24,8 +24,8 @@ export const updateRestaurantInfo = async (req: Request, res: Response) => {
     if (result.affectedRows === 0) return res.status(404).json({ error: "Nem sikerült frissíteni" });
     
     const [rows] = await connection.query<RowDataPacket[]>('SELECT * FROM RESTAURANT_INFO LIMIT 1');
-    res.json(rows[0]);
+    return res.json(rows[0]);
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };

@@ -11,9 +11,9 @@ export const createCart = async (req: Request, res: Response) => {
       'INSERT INTO CART (table_id, waiter_id) VALUES (?, ?)',
       [table_id, waiter_id]
     );
-    res.status(201).json({ id: result.insertId, table_id, waiter_id });
+    return res.status(201).json({ id: result.insertId, table_id, waiter_id });
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };
 
@@ -28,9 +28,9 @@ export const getCartContent = async (req: Request, res: Response) => {
       WHERE ci.cart_id = ?
     `;
     const [rows] = await connection.query(query, [cartId]);
-    res.json(rows);
+    return res.json(rows);
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };
 
@@ -52,9 +52,9 @@ export const addItemToCart = async (req: Request, res: Response) => {
       [cartId, menu_item_id, quantity || 1, note, unitPrice]
     );
 
-    res.status(201).json({ id: result.insertId, message: "Tétel hozzáadva" });
+    return res.status(201).json({ id: result.insertId, message: "Tétel hozzáadva" });
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };
 
@@ -67,8 +67,8 @@ export const removeItemFromCart = async (req: Request, res: Response) => {
       [itemId, id]
     );
     if (result.affectedRows === 0) return res.status(404).json({ error: "Tétel nem található" });
-    res.status(204).send();
+    return res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };

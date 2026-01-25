@@ -53,11 +53,11 @@ export const createOrderFromCart = async (req: Request, res: Response) => {
     await conn.query('DELETE FROM CART WHERE id = ?', [cart_id]);
 
     await conn.commit();
-    res.status(201).json({ message: "Rendelés leadva", orderId });
+    return res.status(201).json({ message: "Rendelés leadva", orderId });
 
   } catch (error) {
     await conn.rollback();
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   } finally {
     conn.release();
   }
@@ -78,9 +78,9 @@ export const getOrders = async (req: Request, res: Response) => {
     query += ' ORDER BY ordered_at DESC';
 
     const [rows] = await connection.query(query, params);
-    res.json(rows);
+    return res.json(rows);
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };
 
@@ -100,9 +100,9 @@ export const getOrderById = async (req: Request, res: Response) => {
       [req.params.id]
     );
 
-    res.json({ ...orderRows[0], items: itemRows });
+    return res.json({ ...orderRows[0], items: itemRows });
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };
 
@@ -116,8 +116,8 @@ export const updateOrderStatus = async (req: Request, res: Response) => {
     );
     
     if (result.affectedRows === 0) return res.status(404).json({ error: "Nincs ilyen rendelés" });
-    res.json({ id: req.params.id, status });
+    return res.json({ id: req.params.id, status });
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };

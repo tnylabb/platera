@@ -58,7 +58,7 @@ export const createBill = async (req: Request, res: Response) => {
     }
 
     await conn.commit();
-    res.status(201).json({ message: "Számla elkészült", billId, totalAmount, billNumber });
+    return res.status(201).json({ message: "Számla elkészült", billId, totalAmount, billNumber });
 
   } catch (error) {
     await conn.rollback();
@@ -78,9 +78,9 @@ export const payBill = async (req: Request, res: Response) => {
     );
     
     if (result.affectedRows === 0) return res.status(404).json({ error: "Számla nem található" });
-    res.json({ message: "Számla kifizetve" });
+    return res.json({ message: "Számla kifizetve" });
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };
 
@@ -92,9 +92,9 @@ export const getBillById = async (req: Request, res: Response) => {
 
     const [items] = await connection.query<RowDataPacket[]>('SELECT * FROM BILL_ITEM WHERE bill_id = ?', [req.params.id]);
     
-    res.json({ ...bill[0], items });
+    return res.json({ ...bill[0], items });
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };
 
@@ -151,11 +151,11 @@ export const splitBill = async (req: Request, res: Response) => {
     }
 
     await conn.commit();
-    res.status(201).json({ message: "Számla sikeresen felosztva", splits: createdSplits });
+    return res.status(201).json({ message: "Számla sikeresen felosztva", splits: createdSplits });
 
   } catch (error) {
     await conn.rollback();
-    res.status(500).json({ error: "Szerver hiba a számla osztásakor" });
+    return res.status(500).json({ error: "Szerver hiba a számla osztásakor" });
   } finally {
     conn.release();
   }
@@ -199,11 +199,11 @@ export const paySplitBill = async (req: Request, res: Response) => {
     }
 
     await conn.commit();
-    res.json({ message: "Részszámla kifizetve", allPaid: pendingSplits[0].count === 0 });
+    return res.json({ message: "Részszámla kifizetve", allPaid: pendingSplits[0].count === 0 });
 
   } catch (error) {
     await conn.rollback();
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   } finally {
     conn.release();
   }
@@ -214,8 +214,8 @@ export const getSplitBills = async (req: Request, res: Response) => {
   const billId = req.params.id;
   try {
     const [rows] = await connection.query('SELECT * FROM SPLIT_BILL WHERE original_bill_id = ?', [billId]);
-    res.json(rows);
+    return res.json(rows);
   } catch (error) {
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };

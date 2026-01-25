@@ -47,7 +47,7 @@ export const login = async (req: Request, res: Response) => {
     );
 
     // Válasz küldése
-    res.json({
+    return res.json({
       token,
       user: {
         id: user.id,
@@ -59,6 +59,6 @@ export const login = async (req: Request, res: Response) => {
 
   } catch (error) {
     console.error("Login hiba:", error);
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   }
 };
