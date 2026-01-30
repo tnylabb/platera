@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as menuController from '../controllers/menuController';
+import verifyToken from '../middleware/authMiddleware';
 
 const router = Router();
 
@@ -10,12 +11,12 @@ router.get('/', menuController.getAllMenu);
 router.get('/:id', menuController.getMenuById);
 
 // POST - uj etel hozzaadasa
-router.post('/', menuController.addMenuItem);
+router.post('/', verifyToken, menuController.addMenuItem);
 
 // PUT - etel frissitese ID alapjan
-router.put('/:id', menuController.updateMenuItem);
+router.put('/:id', verifyToken, menuController.updateMenuItem);
 
 // DELETE - etel torlese ID alapjan
-router.delete('/:id', menuController.deleteMenuItem);
+router.delete('/:id', verifyToken, menuController.deleteMenuItem);
 
 export default router;
