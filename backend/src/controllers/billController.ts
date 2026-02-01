@@ -62,7 +62,7 @@ export const createBill = async (req: Request, res: Response) => {
 
   } catch (error) {
     await conn.rollback();
-    res.status(500).json({ error: "Szerver hiba" });
+    return res.status(500).json({ error: "Szerver hiba" });
   } finally {
     conn.release();
   }
