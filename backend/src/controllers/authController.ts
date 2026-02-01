@@ -80,3 +80,8 @@ export const login = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Szerver hiba" });
   }
 };
+
+// Kijelentkezés
+export const logout = async (_req: Request, res: Response) => {
+  return res.status(200).json({ message: "Sikeres kijelentkezés" });
+};
