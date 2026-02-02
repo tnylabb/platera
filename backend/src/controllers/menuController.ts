@@ -23,6 +23,19 @@ export const getMenuById = async (req: Request, res: Response) => {
   }
 };
 
+export const getMenuByCategory = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const [rows] = await connection.query<RowDataPacket[]>(
+      'SELECT * FROM MENU_ITEM WHERE category_id = ?', 
+      [id]
+    );
+    return res.json(rows);
+  } catch (error) {
+    return res.status(500).json({ error: "Szerver hiba" });
+  }
+};
+
 export const addMenuItem = async (req: Request, res: Response) => {
   const { category_id, name, description, price, image, available } = req.body;
   try {

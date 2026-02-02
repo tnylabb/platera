@@ -10,6 +10,9 @@ router.get('/', menuController.getAllMenu);
 // GET - etel lekerese ID alapjan
 router.get('/:id', menuController.getMenuById);
 
+// GET - etelek lekerese kategoriak szerint
+router.get('/category/:id', menuController.getMenuByCategory);
+
 // POST - uj etel hozzaadasa
 router.post('/', verifyToken, menuController.addMenuItem);
 

@@ -121,3 +121,19 @@ export const updateOrderStatus = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Szerver hiba" });
   }
 };
+
+// Rendelés tétel státusz frissítése
+export const updateOrderItemStatus = async (req: Request, res: Response) => {
+  const { id, itemId } = req.params;
+  const { status } = req.body;
+
+  try {
+    await connection.query(
+      'UPDATE ORDER_ITEM SET status = ? WHERE order_id = ? AND menu_item_id = ?',
+      [status, id, itemId]
+    );
+    return res.json({ message: "Tétel státusza frissítve" });
+  } catch (error) {
+    return res.status(500).json({ error: "Szerver hiba" });
+  }
+};

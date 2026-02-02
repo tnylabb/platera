@@ -58,6 +58,22 @@ export const addItemToCart = async (req: Request, res: Response) => {
   }
 };
 
+// Tétel frissítése a kosárban
+export const updateCartItem = async (req: Request, res: Response) => {
+  const { id, itemId } = req.params;
+  const { quantity, note } = req.body;
+
+  try {
+    await connection.query(
+      'UPDATE CART_ITEM SET quantity = ?, note = ? WHERE cart_id = ? AND menu_item_id = ?',
+      [quantity, note, id, itemId]
+    );
+    return res.json({ message: "Kosár frissítve" });
+  } catch (error) {
+    return res.status(500).json({ error: "Szerver hiba" });
+  }
+};
+
 // Tétel törlése a kosárból
 export const removeItemFromCart = async (req: Request, res: Response) => {
   const { id, itemId } = req.params; // cartId és cartItemId
@@ -68,6 +84,17 @@ export const removeItemFromCart = async (req: Request, res: Response) => {
     );
     if (result.affectedRows === 0) return res.status(404).json({ error: "Tétel nem található" });
     return res.status(204).send();
+  } catch (error) {
+    return res.status(500).json({ error: "Szerver hiba" });
+  }
+};
+
+// Teljes kosár törlése
+export const deleteCart = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    await connection.query('DELETE FROM CART WHERE id = ?', [id]);
+    return res.status(200).json({ message: "Kosár törölve" });
   } catch (error) {
     return res.status(500).json({ error: "Szerver hiba" });
   }

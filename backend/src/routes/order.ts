@@ -16,4 +16,7 @@ router.get('/:id', verifyToken, orderController.getOrderById);
 // PATCH - rendelés státusz frissítése
 router.patch('/:id/status', verifyToken, orderController.updateOrderStatus);
 
+// PATCH - rendelés tétel státusz frissítése
+router.patch('/:id/items/:itemId', verifyToken, orderController.updateOrderItemStatus);
+
 export default router;
