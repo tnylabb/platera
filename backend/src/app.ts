@@ -15,6 +15,7 @@ import cartRouter from './routes/cart';
 import orderRouter from './routes/order';
 import billRouter from './routes/bill';
 import employeeRouter from './routes/employee';
+import statsRouter from './routes/stats';
 
 // Routeok
 app.use('/api/restaurant', restaurantRouter);
@@ -25,6 +26,7 @@ app.use('/api/cart', cartRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/bills', billRouter);
 app.use('/api/employees', employeeRouter);
+app.use('/api/stats', statsRouter);
 
 // Teszt endpoint
 app.get("/", (_req, res) => {
